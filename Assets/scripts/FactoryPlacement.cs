@@ -18,8 +18,9 @@ public class FactoryPlacement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int currentCol = nextPosition % rows;
-        print(currentCol);
+        int currentCol = nextPosition % columns - 1;
+        int currentRow = Mathf.FloorToInt(nextPosition / columns);
+        print(currentCol + "," + currentRow);
     }
 
     // Update is called once per frame
