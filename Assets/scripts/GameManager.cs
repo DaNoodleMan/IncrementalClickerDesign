@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance {  get; private set; }
     public int money;
     float clickMultiplier = 1;
-    List<Factory> factories;
+    List<Factory> factories = new List<Factory>();
 
     public TextMeshProUGUI pointDisplay;
 
