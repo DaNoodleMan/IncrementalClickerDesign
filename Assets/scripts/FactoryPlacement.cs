@@ -29,14 +29,11 @@ public class FactoryPlacement : MonoBehaviour
     
     public void SpawnFactory(GameObject factory)
     {
-        print(nextPosition);
         int currentCol = nextPosition % columns;
         int currentRow = -Mathf.FloorToInt(nextPosition / columns);
-        print(currentCol + ","+currentRow);
         
         GameObject placedFactory = Instantiate(factory, parent.transform);
         Vector3 spawnPos = new Vector3(currentCol * columDistance, currentRow * rowDistance, 0) + (Vector3)startPos;
-        print(spawnPos);
         placedFactory.GetComponent<RectTransform>().localPosition = spawnPos;
         nextPosition++;
 

@@ -1,18 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Factory : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] int cashPerSecond;
+    [SerializeField] float tickSpeed;
+    [Range(0, 1)] float chanceOfTheft;
+    GameManager gameManager;
+    int cashPerTick;
+    private void Start()
     {
-        
+        cashPerTick = Mathf.RoundToInt(cashPerSecond * tickSpeed);
+        gameManager = FindObjectOfType<GameManager>();
+        StartCoroutine(CountTick());
+    }
+    
+    public IEnumerator CountTick() 
+    {
+        while (true) 
+        { 
+            yield return new WaitForSeconds(tickSpeed);
+            Tick();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void Tick()
     {
-        
+        gameManager.AddMoney(cashPerTick);
+    }
+
+    public int GetCashPerSecond() 
+    {
+        return cashPerSecond;
     }
 }

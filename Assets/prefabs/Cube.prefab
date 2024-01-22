@@ -122,3 +122,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6d8706dc30e32f49ba3800dbc8591d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cashPerTick: 1
+  tickSpeed: 1

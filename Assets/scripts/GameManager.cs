@@ -5,32 +5,53 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    int money;
+    public static GameManager instance {  get; private set; }
+    public int money;
     float clickMultiplier = 1;
+    List<Factory> factories;
 
-    public TMP_Text pointDisplay;
+    public TextMeshProUGUI pointDisplay;
 
-    void Start()
+    private void Awake()
     {
-        
+        if(instance != null)
+        {
+            Destroy(gameObject);
+        }
+        instance = this;
     }
 
-    void Update()
+    private void Start()
     {
-        if (pointDisplay != null)
-        {
-            pointDisplay.text = "Money: " + money.ToString();
-        }
+        UpdateDisplay();
+    }
+
+    void UpdateDisplay()
+    {
+        pointDisplay.text = "Money: " + money.ToString();
     }
 
     public void ClickMoney()
     {
         money = Mathf.FloorToInt(money * clickMultiplier);
+        UpdateDisplay();
     }
 
     public void AddMoney(int addedMoney) 
     {
         money += addedMoney;
-        
+        UpdateDisplay();
     }
+
+    public int GetMoney()
+    {
+        return money;
+    }
+
+    public void BuyFactory(int cost, Factory factory)
+    {
+        factories.Add(factory);
+        AddMoney(-cost);
+    }
+
 }
