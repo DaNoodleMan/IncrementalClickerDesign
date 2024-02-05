@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SlotMachine : MonoBehaviour
 {
@@ -8,9 +9,10 @@ public class SlotMachine : MonoBehaviour
     [SerializeField] float parcialRowWinMultiplier;
     [SerializeField] float jackpotwWinMultiplier;
     [SerializeField] int possibleSlots;
-    [SerializeField] List<TextMeshProUGUI> displays = new List<TextMeshProUGUI>();
+    [SerializeField] List<Image> sprites = new List<Image>();
     [SerializeField] TMP_InputField betInput;
-    
+    [SerializeField] Sprite[] slotSprites;
+
     public void Play()
     {
 
@@ -29,11 +31,12 @@ public class SlotMachine : MonoBehaviour
         bool jackpot = true;
         int currentStreak = -1;
 
-        for (int index = 0; index < displays.Count; index++)
+        for (int index = 0; index < sprites.Count; index++)
         {
             slots.Add(Random.Range(0, possibleSlots));
-            displays[index].text = slots[index].ToString();
-            if(slots[index] == 0)
+            int slotNumber = slots[index];
+            sprites[index].sprite = slotSprites[slotNumber];
+            if (slotNumber == 0)
             {
                 if(currentStreak == 0)
                 {
@@ -47,7 +50,7 @@ public class SlotMachine : MonoBehaviour
                 currentStreak = -1;
             }
             
-            if (slots[0] != slots[index])
+            if (slots[0] != slotNumber)
             {
                 canWin = false;
             }
