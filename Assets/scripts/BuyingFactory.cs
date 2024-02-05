@@ -21,6 +21,6 @@ public class BuyingFactory : MonoBehaviour
         if (GameManager.instance.GetMoney() < cost) { return; }
 
         GameManager.instance.BuyFactory(cost, factory);
-        factoryPlacement.SpawnFactory(factory.gameObject);
+        factoryPlacement.SpawnFactory(factory.gameObject, cost);
     }
 }

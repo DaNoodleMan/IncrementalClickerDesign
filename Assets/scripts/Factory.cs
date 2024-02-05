@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Factory : MonoBehaviour
 {
     [SerializeField] int cashPerSecond;
+
     [SerializeField] float tickSpeed;
     [Range(0, 1)] float chanceOfTheft;
+    int cost;
     GameManager gameManager;
     int cashPerTick;
     private void Start()
@@ -35,5 +35,16 @@ public class Factory : MonoBehaviour
     public int GetCashPerSecond() 
     {
         return cashPerSecond;
+    }
+
+    public void Sell()
+    {
+        gameManager.AddMoney(cost);
+        Destroy(gameObject);
+    }
+
+    public void SetCost(int newCost)
+    {
+        cost = newCost;
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FactoryPlacement : MonoBehaviour
@@ -8,26 +6,16 @@ public class FactoryPlacement : MonoBehaviour
     [SerializeField] int columns;
     [SerializeField] float columDistance;
     [SerializeField] float rowDistance;
+    [SerializeField] float corridorLeft;
+    [SerializeField] float corridorRight;
     [SerializeField] Vector2 startPos;
     [SerializeField] Canvas canvas;
     [SerializeField] GameObject parent;
     [SerializeField] int previewSize;
 
     int nextPosition;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
-    public void SpawnFactory(GameObject factory)
+    public void SpawnFactory(GameObject factory, int cost)
     {
         int currentCol = nextPosition % columns;
         int currentRow = -Mathf.FloorToInt(nextPosition / columns);
@@ -35,19 +23,22 @@ public class FactoryPlacement : MonoBehaviour
         GameObject placedFactory = Instantiate(factory, parent.transform);
         Vector3 spawnPos = new Vector3(currentCol * columDistance, currentRow * rowDistance, 0) + (Vector3)startPos;
         placedFactory.GetComponent<RectTransform>().localPosition = spawnPos;
+        placedFactory.GetComponent<Factory>().SetCost(cost);
         nextPosition++;
-
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.matrix = canvas.transform.localToWorldMatrix;
-        Gizmos.color = Color.white;
         for (int rowIndex = 0; rowIndex < rows; rowIndex++)
         {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(new Vector2(corridorLeft, startPos.y + (-rowIndex * rowDistance) + transform.localPosition.y - rowDistance * 0.5f), new Vector2(corridorRight, startPos.y + (-rowIndex * rowDistance) + transform.localPosition.y - rowDistance* 0.5f));
+
             for (int colIndex = 0; colIndex < columns; colIndex++)
             {
                 Vector2 spawnPosition = new Vector2(startPos.x + (colIndex * columDistance), startPos.y + (-rowIndex * rowDistance)) + (Vector2)transform.localPosition;
+                Gizmos.color = Color.white;
                 Gizmos.DrawCube((Vector3)spawnPosition, Vector3.one * 20);
             }
         }
